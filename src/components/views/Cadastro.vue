@@ -30,6 +30,8 @@ export default {
   return {
    prioridade: null
   };
+ },mounted() {
+  this.prioridade = "ALTA"
  },
  methods: {
   salvar() {
@@ -51,8 +53,8 @@ export default {
   }
  },
 };
-</script>
-<style>
+</script >
+<style scoped>
 .formulario {
   display: flex;
   flex-direction: column;
@@ -76,8 +78,19 @@ form {
   align-items: center;
 }
 
-input, select.select-prioridade {
-  width: 100%; /* Define a largura para corresponder */
+input {
+  width: 100%;
+  border: none; 
+  height: 30px;
+  font-size: 20px;
+  border-bottom: 2px solid;
+  outline: none;
+}
+
+select.select-prioridade{
+  width: 100%;
+  border: none; 
+  border-bottom: 2px solid;
   height: 30px;
   font-size: 20px;
   outline: none;

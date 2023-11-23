@@ -1,23 +1,25 @@
 <template>
   <div class="tabela">
     <h1>Lista do Dia</h1>
-    <button class="btn-voltar-inicio" @click="$router.push('/')">Voltar</button>
-    <br><br>
+    <br /><br />
+    <div class="prioridade-botoes">
+      <button @click="filtrarPorPrioridade('ALTA')">Mostrar Alta</button>
+      <button @click="filtrarPorPrioridade('MÉDIA')">Mostrar Média</button>
+      <button @click="filtrarPorPrioridade('BAIXA')">Mostrar Baixa</button>
+    </div>
     <div class="table-responsive">
       <table>
         <thead class="linha-titulo">
           <tr>
-            <th>Id</th>
-            <th>Descrição</th>
-            <th>Prioridade</th>
-            <th>Ações</th>
+            <th>DESCRIÇÃO</th>
+            <th style="width: 15%;">PRIORIDADE</th>
+            <th style="width: 30%;">AÇÕES</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(f, i) in aFazeres" :key="i">
-            <td>{{ f.id }}</td>
             <td>{{ f.descricao }}</td>
-            <td>{{ f.prioridade }}</td>
+            <td style="width: 15%;">{{ f.prioridade }}</td>
             <td>
               <button class="btn" @click="editar(f)">Editar</button>
               <button class="btn" @click="excluir(f)">Excluir</button>
@@ -30,22 +32,23 @@
   <div id="modal" :class="{ 'modal': true, 'show-modal': showModal }">
     <div class="box-modal">
       <form>
-        <input v-model="nDescricao" placeholder="Descrição">
-        <br>
+        <input v-model="nDescricao" placeholder="Descrição" />
+        <br />
         <select v-model="nPrioridade" class="select-prioridade">
           <option value="ALTA">ALTA</option>
           <option value="MÉDIA">MÉDIA</option>
           <option value="BAIXA">BAIXA</option>
         </select>
-        <br>
+        <br />
         <button @click="salvar">Salvar</button>
-        <button @click="cancelar">cancelar</button>
+        <button @click="cancelar">Cancelar</button>
       </form>
     </div>
   </div>
 </template>
+
 <script>
-import { tbAFazer } from '@/components/database/db'
+import { tbAFazer } from "@/components/database/db";
 
 export default {
   data() {
@@ -54,66 +57,56 @@ export default {
       aFazeres: [],
       nDescricao: null,
       nPrioridade: null,
-      showModal: false
-    }
+      showModal: false,
+    };
   },
   mounted() {
-    this.getAFazer()
+    this.filtrarPorPrioridade("ALTA")
   },
   methods: {
     getAFazer() {
-      tbAFazer.orderBy('descricao').toArray((aFazer) => {
+      tbAFazer.orderBy("descricao").toArray((aFazer) => {
         this.aFazeres = aFazer;
-      })
+      });
     },
     editar(f) {
-      this.nDescricao = f.descricao
-      this.nPrioridade = f.prioridade
+      this.nDescricao = f.descricao;
+      this.nPrioridade = f.prioridade;
       this.id = f.id;
       this.showModal = true;
     },
     excluir(f) {
       tbAFazer.delete(f.id).then(() => {
-        this.getAFazer();
+        this.filtrarPorPrioridade(this.nPrioridade);
       });
     },
     salvar() {
-      tbAFazer.update(this.id, { descricao: this.nDescricao, prioridade: this.nPrioridade }).then((r) => {
-        console.log('Atualizou', r);
-        this.getAFazer();
-      });
+      tbAFazer
+        .update(this.id, { descricao: this.nDescricao, prioridade: this.nPrioridade })
+        .then(() => {
+          this.filtrarPorPrioridade(this.nPrioridade);
+        });
       this.showModal = false;
     },
     cancelar() {
       this.showModal = false;
-    }
-
-  }
-}
+    },
+    filtrarPorPrioridade(prioridade) {
+      tbAFazer
+        .where("prioridade")
+        .equals(prioridade)
+        .toArray((aFazer) => {
+          this.aFazeres = aFazer.sort((a, b) => {
+            return a.descricao.localeCompare(b.descricao);
+          });
+        });
+    },
+  },
+};
 </script>
-
-<style>
+<style scoped>
 .tabela {
   text-align: center;
-}
-
-.btn-voltar-inicio {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  padding: 10px;
-  border-radius: 18px;
-  border: none;
-  cursor: pointer;
-  color: white;
-  background-color: #000000;
-  font-weight: bold;
-}
-
-.btn-voltar-inicio:hover {
-  background-color: #888484;
-  color: black;
 }
 
 .table-responsive {
@@ -135,6 +128,8 @@ td {
   background-color: black;
   color: white;
   text-align: center;
+  height: 50px;
+  font-size: 15px;
 }
 
 .modal {
@@ -153,8 +148,9 @@ td {
   color: white;
   text-align: center;
 }
-.box-modal{
-  background-color: rgb(151, 151, 151);
+
+.box-modal {
+  background-color: #979797;
   padding: 20px;
   border-radius: 30px;
   margin-top: 40px;
@@ -165,25 +161,43 @@ td {
 }
 
 input {
-  width: 100%;
+  width: 80%;
   padding: 10px;
   margin: 5px 0;
-  border: 1px solid #ccc;
+  border: none;
+  border-bottom: 1px solid;
+  background: #979797;
   border-radius: 3px;
+  outline: none;
+}
+
+.prioridade-botoes {
+  margin-bottom: 20px;
+}
+
+select {
+  width: 80%;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-bottom: 1px solid;
+  background: #979797;
+  border-radius: 3px;
+  outline: none;
 }
 
 button {
   background-color: #000000;
   color: white;
-  padding: 10px 20px;
+  padding: 5px 10px;
+  margin: 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 10px 0;
 }
 
 button:hover {
-  background-color: #888484;
+  background-color: #ffffff;
   color: black;
 }
 </style>

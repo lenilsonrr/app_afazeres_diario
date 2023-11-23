@@ -23,13 +23,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60vh;
-  margin: 0;
+  text-align: center;
+  height: 50vh;
+ 
 }
 
 .home {
