@@ -46,12 +46,14 @@ export default {
 .titulo-home {
   font-size: 24px;
   margin-bottom: 20px;
+  background: white;
 }
 
 .button-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background: white;
 }
 
 .btn-home {

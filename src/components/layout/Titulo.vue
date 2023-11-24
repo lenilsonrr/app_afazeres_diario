@@ -25,6 +25,7 @@ export default {
 }
 p{
  display: block;
+ background: black;
  width: 110px;
  margin-left: auto;
  margin-right: auto;

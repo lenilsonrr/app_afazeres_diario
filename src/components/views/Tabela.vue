@@ -8,7 +8,7 @@
     <br>
     <div class="table-responsive">
       <table>
-        <thead class="linha-titulo">
+        <thead>
           <tr>
             <th>DESCRIÇÃO</th>
             <th style="width: 20%;">PRIORIDADE</th>
@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(f, i) in aFazeres" :key="i">
+          <tr v-for="(f, i) in aFazeres" :key="i" >
             <td>{{ f.descricao }}</td>
             <td style="width: 15%;">{{ f.prioridade }}</td>
             <td>
@@ -29,8 +29,12 @@
     </div>
   </div>
   <div id="modal" :class="{ 'modal': true, 'show-modal': showModal }">
+    
     <div class="box-modal">
-      <form>
+      <h3>EDITAR</h3>
+      <br>
+      <br>
+      <form> 
         <input v-model="nDescricao" placeholder="Descrição" />
         <br />
         <select v-model="nPrioridade" class="select-prioridade">
@@ -84,7 +88,6 @@ export default {
         tbAFazer
           .update(this.id, { descricao: this.nDescricao, prioridade: this.nPrioridade })
           .then(() => {
-            console.log(this.nDescricao)
             this.getAFazer();
             this.showModal = false;
           });
@@ -119,10 +122,10 @@ table {
 table,
 th,
 td {
-  border: 1px solid #ddd;
+  border: 1px solid #595656;
 }
 
-.linha-titulo {
+th {
   background-color: black;
   color: white;
   text-align: center;
@@ -133,7 +136,6 @@ td {
 .modal {
   display: none;
   position: fixed;
-  padding: 30px;
   justify-content: center;
   left: 50%;
   top: 50%;
@@ -145,13 +147,24 @@ td {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.479);
   color: white;
   text-align: center;
+  align-items: center;
 }
-
+h3{
+  color: black;
+  background: white;
+  border-bottom: 2px solid;
+}
+form{
+  background: white;
+}
 .box-modal {
-  background-color: #979797;
-  padding: 20px;
-  border-radius: 30px;
-  margin-top: 40px;
+background: white;
+max-width: 380px;
+margin-top: 50px;
+margin-left: auto;
+margin-right: auto;
+border-radius: 30px;
+padding: 40px;
 }
 
 .show-modal {
@@ -159,12 +172,11 @@ td {
 }
 
 input {
-  width: 80%;
-  padding: 10px;
+  width: 100%;
   margin: 5px 0;
   border: none;
   border-bottom: 1px solid;
-  background: #979797;
+  background: white;
   border-radius: 3px;
   outline: none;
 }
@@ -174,12 +186,11 @@ input {
 }
 
 select {
-  width: 80%;
-  padding: 10px;
+  width: 100%;
   margin: 5px 0;
   border: none;
   border-bottom: 1px solid;
-  background: #979797;
+  background: white;
   border-radius: 3px;
   outline: none;
 }

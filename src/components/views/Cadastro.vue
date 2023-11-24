@@ -1,5 +1,8 @@
 <template>
  <div class="formulario">
+  <h3>CADASTRAR NOVO</h3>
+  <br>
+  <br>
    <form>
      <label>Digite a descrição</label>
      <br />
@@ -59,6 +62,7 @@ export default {
 <style scoped>
 .formulario {
   display: flex;
+  background: white;
   flex-direction: column;
   border: 2px solid;
   margin-top: 30px;
@@ -67,6 +71,12 @@ export default {
   margin-right: auto;
   padding: 30px;
   align-items: center;
+  border-radius: 30px;
+}
+
+h3{
+  background: white;
+  border-bottom: 2px solid;
 }
 
 form {
@@ -78,6 +88,7 @@ form {
   margin-left: auto;
   margin-right: auto;
   align-items: center;
+  background: white;
 }
 
 input {
@@ -87,6 +98,7 @@ input {
   font-size: 20px;
   border-bottom: 2px solid;
   outline: none;
+  background: white;
 }
 
 select.select-prioridade{
@@ -96,6 +108,11 @@ select.select-prioridade{
   height: 30px;
   font-size: 20px;
   outline: none;
+  background: white;
+}
+
+label{
+  background: white;
 }
 
 .btn {

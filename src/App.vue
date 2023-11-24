@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Titulo from "./components/database/Titulo.vue";
+import Titulo from "./components/layout/Titulo.vue";
 
 export default {
   components: {
@@ -20,5 +20,6 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: rgb(227, 226, 226);
 }
 </style>
