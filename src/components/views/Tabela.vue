@@ -2,11 +2,6 @@
   <div class="tabela">
     <h1>Lista do Dia</h1>
     <br /><br />
-    <div class="prioridade-botoes">
-      <button @click="filtrarPorPrioridade('ALTA')">Mostrar Alta</button>
-      <button @click="filtrarPorPrioridade('MÉDIA')">Mostrar Média</button>
-      <button @click="filtrarPorPrioridade('BAIXA')">Mostrar Baixa</button>
-    </div>
     <div class="table-responsive">
       <table>
         <thead class="linha-titulo">
@@ -61,7 +56,7 @@ export default {
     };
   },
   mounted() {
-    this.filtrarPorPrioridade("ALTA")
+    this.getAFazer()
   },
   methods: {
     getAFazer() {
@@ -77,29 +72,23 @@ export default {
     },
     excluir(f) {
       tbAFazer.delete(f.id).then(() => {
-        this.filtrarPorPrioridade(this.nPrioridade);
+        this.getAFazer()
       });
     },
     salvar() {
-      tbAFazer
-        .update(this.id, { descricao: this.nDescricao, prioridade: this.nPrioridade })
-        .then(() => {
-          this.filtrarPorPrioridade(this.nPrioridade);
-        });
+      if (this.nDescricao = ! null && this.nDescricao != "") {
+        tbAFazer
+          .update(this.id, { descricao: this.nDescricao, prioridade: this.nPrioridade })
+          .then(() => {
+            this.getAFazer();
+          });
+      } else {
+        alert("Não deixe a decsrição vazia!")
+      }
       this.showModal = false;
     },
     cancelar() {
       this.showModal = false;
-    },
-    filtrarPorPrioridade(prioridade) {
-      tbAFazer
-        .where("prioridade")
-        .equals(prioridade)
-        .toArray((aFazer) => {
-          this.aFazeres = aFazer.sort((a, b) => {
-            return a.descricao.localeCompare(b.descricao);
-          });
-        });
     },
   },
 };

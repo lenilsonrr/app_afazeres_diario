@@ -28,7 +28,8 @@ export default {
  name: "mFormulario",
  data() {
   return {
-   prioridade: null
+   prioridade: null,
+   descricao: null
   };
  },mounted() {
   this.prioridade = "ALTA"
@@ -37,14 +38,14 @@ export default {
   salvar() {
    const self = this;
    const router = this.$router
-   if (this.descricao != null || this.prioridade != null) {
+   if (this.descricao != null && this.descricao !="") {
     tbAFazer.add({ descricao: this.descricao, prioridade: this.prioridade }).then(function () {
      self.descricao = '';
      self.prioridade = '';
      router.push('/tabela');
     });
    } else {
-    alert("Os campos tem que ser preenchidos")
+    alert("A descrição tem que ser preenchida!")
    }
 
   },
