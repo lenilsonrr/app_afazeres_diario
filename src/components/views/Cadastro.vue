@@ -40,6 +40,7 @@ export default {
    const router = this.$router
    if (this.descricao != null && this.descricao !="") {
     tbAFazer.add({ descricao: this.descricao, prioridade: this.prioridade }).then(function () {
+      
      self.descricao = '';
      self.prioridade = '';
      router.push('/tabela');

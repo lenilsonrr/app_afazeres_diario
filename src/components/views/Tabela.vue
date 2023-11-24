@@ -1,13 +1,17 @@
 <template>
   <div class="tabela">
+    <br>
     <h1>Lista do Dia</h1>
     <br /><br />
+    <button @click="cadastrar">Cadastra novo</button>
+    <br>
+    <br>
     <div class="table-responsive">
       <table>
         <thead class="linha-titulo">
           <tr>
             <th>DESCRIÇÃO</th>
-            <th style="width: 15%;">PRIORIDADE</th>
+            <th style="width: 20%;">PRIORIDADE</th>
             <th style="width: 30%;">AÇÕES</th>
           </tr>
         </thead>
@@ -76,16 +80,21 @@ export default {
       });
     },
     salvar() {
-      if (this.nDescricao = ! null && this.nDescricao != "") {
+      if (this.nDescricao != null && this.nDescricao != "") {
         tbAFazer
           .update(this.id, { descricao: this.nDescricao, prioridade: this.nPrioridade })
           .then(() => {
+            console.log(this.nDescricao)
             this.getAFazer();
+            this.showModal = false;
           });
       } else {
         alert("Não deixe a decsrição vazia!")
       }
-      this.showModal = false;
+      
+    },
+    cadastrar(){
+      this.$router.push("/cadastro")
     },
     cancelar() {
       this.showModal = false;
